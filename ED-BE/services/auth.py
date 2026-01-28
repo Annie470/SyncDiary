@@ -1,13 +1,7 @@
 from fastapi import HTTPException
 from models.database_models import User
 from models.schemas.auth import LoginRequest, RegisterRequest
-from utils.security import hash_password,  create_token
-import bcrypt
-
-from fastapi import HTTPException
-from models.database_models import User
-from models.schemas.auth import LoginRequest, RegisterRequest
-from utils.security import hash_password, create_token
+from utils.security import hash_password, verify_password, create_token
 
 class AuthService:
     @staticmethod
@@ -16,7 +10,7 @@ class AuthService:
         if not user:
             raise HTTPException(status_code=401, detail="Utente non trovato")
         
-        correct_pwd= bcrypt.checkpw(login_data.password.encode('utf-8'), user.password.encode('utf-8'))
+        correct_pwd = verify_password(login_data.password, user.password)
         if not correct_pwd:
             raise HTTPException(status_code=401, detail="Password errata")
        
