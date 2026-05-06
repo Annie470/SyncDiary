@@ -2,7 +2,8 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { IUserLogin, IUserResponse } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Token } from '@angular/compiler';
+import { Token } from '../models/token';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,13 @@ export class UserService {
   private _isLogged = signal<boolean>(this.hasToken());
   private _user = signal<IUserResponse | null>(null);
   private http = inject(HttpClient);
+  private authUrl = `${environment.syD}/sync-diary/auth`;
   private apiUrl = `${environment.syD}/sync-diary`;
+
+  isLogged = computed(() => this._isLogged());
 
   private hasToken(): boolean {
     return !!localStorage.getItem(this.tokenKey);
-  }
-
-  logged(token: string) {
-    localStorage.setItem(this.tokenKey, token);
-    this._isLogged.set(true);
   }
 
   logout() {
@@ -32,15 +31,15 @@ export class UserService {
   setUser(user: IUserResponse) { this._user.set(user); }
   clearUser() { this._user.set(null); }
 
-  login(payload: IUserLogin) {
-    return this.http.post<Token>(`${this.apiUrl}/login`, {
-      ...payload,
-      platform_name: 'pas',
-    });
+  async login(payload: IUserLogin) {
+    const tokenResponse = await firstValueFrom(
+      this.http.post<Token>(`${this.authUrl}/login`, payload)
+    );
+    localStorage.setItem(this.tokenKey, tokenResponse.access_token);
+    this._isLogged.set(true);
   }
 
   getMe() {
-    return this.http.get<IUserResponse>(`${this.apiUrl}/me`)
+    return this.http.get<IUserResponse>(`${this.apiUrl}/me`);
   }
-
 }

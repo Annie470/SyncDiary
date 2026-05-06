@@ -1,26 +1,26 @@
 services:
 
-  syncD-BE:
+  syncdiary:
     build: ED-BE
     container_name: edbe_fastapi
     ports:
-      - "8000:8000"
+      - "8002:8000"
     depends_on:
-      - postgres
+      - mongodb
     env_file:
-      - ./ED-BE/config.py
+      - ./ED-BE/.env
     volumes:
-      - ED-BE:/app
+      - ./ED-BE:/app
     working_dir: /app
-    command: uvicorn main:app --port 8002 --reload --log-level debug
+    command: uvicorn main:app --port 8000 --reload --log-level debug
 
   nginx:
     image: nginx:alpine
-    container_name: nginx_server
+    container_name: nginx_server_syncD
     ports:
-      - "80:80"
+      - "8443:80"
     depends_on:
-      - syncD-BE
+      - syncdiary
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro                        
     restart: unless-stopped
@@ -33,14 +33,14 @@ services:
     volumes:
       - ./ED-FE:/app
     working_dir: /app
-    command: sh -c "npm install && npx ng serve --port 4201 --poll 500"
+    command: sh -c "npm install && npx ng serve --host 0.0.0.0 --port 4201 --poll 500"
     restart: unless-stopped
 
   mongodb:
     image: mongo:latest
     container_name: mongodb_diary
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongo_data:/data/db
 

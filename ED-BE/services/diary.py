@@ -38,8 +38,8 @@ class DiaryService:
         
     @staticmethod
     async def get_all_diaries(username: str) -> List[Diary]:
-        try:      
-            diaries = await Diary.find(Diary).to_list()
+        try:
+            diaries = await Diary.find().to_list()
             return diaries
         except HTTPException:
             raise

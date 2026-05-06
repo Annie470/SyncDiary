@@ -1,8 +1,8 @@
-fastapi
-uvicorn
-beanie
-motor
-pydantic
-python-dotenv
-python-jose
-passlib
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
+python-dotenv==1.0.1
+PyJWT==2.9.0
+beanie==1.26.0
+motor==3.7.1
+bcrypt==4.2.0

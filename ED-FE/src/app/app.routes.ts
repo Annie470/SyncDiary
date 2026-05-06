@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Homepage } from './components/homepage/homepage';
-import { Shell } from './components/shell/shell';
 import { authGuard } from './shared/utils/auth.guard';
 
 export const routes: Routes = [
@@ -16,14 +15,10 @@ export const routes: Routes = [
     component: Register
   },
 
-
-  // ROTTE PROTETTE 
+  // ROTTE PROTETTE
   {
-    path: '',
-    component: Shell,       
-    canActivate: [authGuard],
-    children: [
-      { path: 'homepage',  component: Homepage }
-    ]
+    path: 'homepage',
+    component: Homepage,
+    canActivate: [authGuard]
   }
 ];

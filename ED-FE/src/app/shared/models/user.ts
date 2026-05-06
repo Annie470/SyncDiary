@@ -4,7 +4,6 @@ export interface IUserResponse {
 }
 
 export interface IUserLogin {
-  id: string;
   username: string;
   password: string;
 }

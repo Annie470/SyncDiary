@@ -8,6 +8,6 @@ class Settings:
     JWT_ALGORITHM: str= os.getenv("JWT_ALGORITHM")
     ACCESS_TOKEN_EXPIRE_DAYS: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_DAYS"))
     MONGODB_URL: str= os.getenv("MONGODB_URL")
-    MONGONAME: str =os.getenv("MONGONAME")
+    MONGONAME: str =os.getenv("MONGO_NAME")
 
 settings = Settings()

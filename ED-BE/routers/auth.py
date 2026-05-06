@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from models.schemas.auth import Token, LoginRequest, RegisterRequest, UserResponse
 from services.auth import AuthService
 
-router = APIRouter(prefix="/auth", tags=["Authentication"])
+router = APIRouter(prefix="/sync-diary/auth", tags=["Authentication"])
 
 @router.post("/login", response_model=Token)
 async def login(login_data: LoginRequest):
