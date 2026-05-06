@@ -12,4 +12,4 @@ class DiaryResponse(BaseModel):
     user_id: str
     
     class Config:
-        from_attributes = True  #ok conversione doc Beanie
+        from_attributes = True  
