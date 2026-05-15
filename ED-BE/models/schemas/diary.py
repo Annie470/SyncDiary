@@ -3,8 +3,7 @@ from datetime import date
 
 class DiaryRequest(BaseModel):
     text: str
-    daily_date: date
-
+   
 class DiaryResponse(BaseModel):
     id: str
     text: str

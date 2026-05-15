@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="auth-wrapper">
+  <div class="top-bar">
+    <a routerLink="/register">Non hai un account? Registrati</a>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" class="auth-form">
+    <h2>Accedi</h2>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text"  [(ngModel)]="credentials.username" placeholder="Il tuo username" />
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password"  [(ngModel)]="credentials.password" placeholder="La tua password" />
+    </div>
+
+     <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Caricamento...' : 'Accedi' }}
+</button>
+ @if (error()) {
+<div class="alert alert-danger">{{ error() }}</div>
+      }
+  </form>
+</div>

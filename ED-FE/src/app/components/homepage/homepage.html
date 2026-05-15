@@ -1,1 +1,42 @@
-<p>homepage works!</p>
+<div class="page">
+  <h1>Diari del giorno</h1>
+
+  @if (loading()) {
+    <div class="d-flex justify-content-center mt-4">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Caricamento...</span>
+      </div>
+    </div>
+  }
+
+  <div class="diary-grid">
+    @for (diary of diaries(); track diary.id) {
+      <div class="diary-card">
+        <p class="diary-date">{{ diary.daily_date | date: 'dd/MM/yyyy' }}</p>
+        <p class="diary-text">{{ diary.text }}</p>
+      </div>
+    } @empty {
+      <p class="empty">Nessun diario per oggi.</p>
+    }
+  </div>
+
+  <button class="fab" (click)="openForm()">+</button>
+
+  @if (showForm()) {
+    <div class="overlay" (click)="closeForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h2>Nuovo diario</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="field">
+            <label for="text">Testo</label>
+            <textarea id="text" formControlName="text" rows="5" placeholder="Scrivi il tuo diario..."></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closeForm()">Annulla</button>
+            <button type="submit" [disabled]="form.invalid">Salva</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

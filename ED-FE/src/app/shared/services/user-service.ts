@@ -1,9 +1,9 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { IUserLogin, IUserResponse } from '../models/user';
+import { IUserLogin, IUserRegister, IUserResponse } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Token } from '../models/token';
-import { firstValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,15 +28,20 @@ export class UserService {
     this._user.set(null);
   }
 
+  saveToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    this._isLogged.set(true);
+  }
+
   setUser(user: IUserResponse) { this._user.set(user); }
+
   clearUser() { this._user.set(null); }
 
-  async login(payload: IUserLogin) {
-    const tokenResponse = await firstValueFrom(
-      this.http.post<Token>(`${this.authUrl}/login`, payload)
-    );
-    localStorage.setItem(this.tokenKey, tokenResponse.access_token);
-    this._isLogged.set(true);
+  login(payload: IUserLogin): Observable<Token> {
+    return this.http.post<Token>(`${this.authUrl}/login`, payload);
+  }
+  register(payload: IUserRegister) {
+    return this.http.post(`${this.authUrl}/register`, payload)
   }
 
   getMe() {

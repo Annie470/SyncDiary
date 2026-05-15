@@ -1,6 +1,5 @@
 export interface IDiaryRequest {
   text: string;
-  daily_date: string;
 }
 
 export interface IDiaryResponse {

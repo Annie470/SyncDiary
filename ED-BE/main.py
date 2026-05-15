@@ -2,20 +2,33 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 from config import settings
 from models.database_models import User, Diary
 from routers import auth, diary
+
+async def delete_all_diaries():
+    deleted = await Diary.delete_all()
+    print(f"[SCHEDULER] Diaries eliminati: {deleted.deleted_count}")
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
     client =AsyncIOMotorClient(settings.MONGODB_URL)
     database = client[settings.MONGONAME]
     await init_beanie(
-        database=database,  
+        database=database,
         document_models=[User, Diary]
     )
     print(f"STARTED AT: {settings.MONGODB_URL}")
+
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(delete_all_diaries, CronTrigger(hour=23, minute=59))
+    scheduler.start()
+
     yield
+
+    scheduler.shutdown()
     client.close()
 
 app=FastAPI(lifespan=lifespan)

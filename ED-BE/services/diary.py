@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from models.database_models import Diary, User
 from models.schemas.diary import DiaryRequest, DiaryResponse
 from typing import List
+from datetime import datetime
 
 class DiaryService:
     @staticmethod
@@ -13,7 +14,7 @@ class DiaryService:
             
             diary = Diary(
                 text=diary_data.text,
-                daily_date=diary_data.daily_date,
+                daily_date=datetime.now(),
                 user=user
             )       
             await diary.insert()

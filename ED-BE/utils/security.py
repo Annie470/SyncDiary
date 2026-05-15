@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException
 from config import settings
 
+
 def hash_password(password: str) -> str:
     pwd_bytes = password.encode('utf-8')
     salt = bcrypt.gensalt()
