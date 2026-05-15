@@ -40,8 +40,8 @@ export class UserService {
   login(payload: IUserLogin): Observable<Token> {
     return this.http.post<Token>(`${this.authUrl}/login`, payload);
   }
-  register(payload: IUserRegister) {
-    return this.http.post(`${this.authUrl}/register`, payload)
+  register(payload: IUserRegister):  Observable<IUserResponse> {
+    return this.http.post<IUserResponse>(`${this.authUrl}/register`, payload)
   }
 
   getMe() {
