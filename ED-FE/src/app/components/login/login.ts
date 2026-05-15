@@ -35,7 +35,7 @@ export class Login {
       error: (err: HttpErrorResponse) => {
         this.userService.logout();
         this.loading.set(false);
-        this.error.set(err.error?.message ?? 'Errore durante il login');
+        this.error.set(err.error?.detail ?? 'Errore durante il login');
       },
     });
   }

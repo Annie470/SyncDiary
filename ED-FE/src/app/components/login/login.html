@@ -8,15 +8,15 @@
 
     <div class="field">
       <label for="username">Username</label>
-      <input id="username" type="text"  [(ngModel)]="credentials.username" placeholder="Il tuo username" />
+      <input id="username" name="username" type="text" [(ngModel)]="credentials.username" placeholder="Il tuo username" />
     </div>
 
     <div class="field">
       <label for="password">Password</label>
-      <input id="password" type="password"  [(ngModel)]="credentials.password" placeholder="La tua password" />
+      <input id="password" name="password" type="password" [(ngModel)]="credentials.password" placeholder="La tua password" />
     </div>
 
-     <button type="submit" [disabled]="loading()">
+     <button type="submit" [disabled]="loading()" class="text-white">
         {{ loading() ? 'Caricamento...' : 'Accedi' }}
 </button>
  @if (error()) {

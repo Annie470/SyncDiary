@@ -26,14 +26,14 @@
     <div class="overlay" (click)="closeForm()">
       <div class="modal" (click)="$event.stopPropagation()">
         <h2>Nuovo diario</h2>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmit()">
           <div class="field">
             <label for="text">Testo</label>
-            <textarea id="text" formControlName="text" rows="5" placeholder="Scrivi il tuo diario..."></textarea>
+            <textarea id="text" name="text" [(ngModel)]="form.text" rows="5" placeholder="Scrivi il tuo diario..."></textarea>
           </div>
           <div class="modal-actions">
             <button type="button" class="btn-cancel" (click)="closeForm()">Annulla</button>
-            <button type="submit" [disabled]="form.invalid">Salva</button>
+            <button type="submit" [disabled]="loading()">Salva</button>
           </div>
         </form>
       </div>

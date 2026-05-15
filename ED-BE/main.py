@@ -4,6 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
+from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 from models.database_models import User, Diary
 from routers import auth, diary
@@ -32,6 +33,14 @@ async def lifespan(app:FastAPI):
     client.close()
 
 app=FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.FRONTEND_BASE_URL,"http://localhost:4201"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 app.include_router(auth.router)
 app.include_router(diary.router)
 
@@ -42,5 +51,6 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "main:app"
+        "main:app",
+        reload=True
     )

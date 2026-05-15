@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IUserRegister } from '../../shared/models/user';
 import { UserService } from '../../shared/services/user-service';
@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -22,16 +22,17 @@ export class Register {
   onSubmit() {
     if (this.form.password !== this.confirmedPwd) {
       this.error.set("Le due password non corrispondono");
-      return
+      return;
     }
+    this.loading.set(true);
     this.userService.register(this.form).subscribe({
-      next: (response) => {
+      next: () => {
         this.loading.set(false);
         this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        this.error.set(err.error?.message ?? 'Errore durante la registrazione');
+        this.error.set(err.error?.detail ?? 'Errore durante la registrazione');
       },
     });
 

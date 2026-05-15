@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DiaryService } from '../../shared/services/diary-service';
 import { IDiaryRequest, IDiaryResponse } from '../../shared/models/diary';
@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-homepage',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [FormsModule, DatePipe],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })

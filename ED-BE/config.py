@@ -9,5 +9,6 @@ class Settings:
     ACCESS_TOKEN_EXPIRE_DAYS: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_DAYS"))
     MONGODB_URL: str= os.getenv("MONGODB_URL")
     MONGONAME: str =os.getenv("MONGO_NAME")
+    FRONTEND_BASE_URL: str =os.getenv("FRONTEND_BASE_URL")
 
 settings = Settings()
