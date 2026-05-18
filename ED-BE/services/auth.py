@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import HTTPException
 from models.database_models import User
 from models.schemas.auth import LoginRequest, RegisterRequest
@@ -28,7 +29,7 @@ class AuthService:
             existing_user = await User.find_one(User.username == register_data.username)
             if existing_user:
                 raise HTTPException(status_code=400, detail="Username già in uso")
-            hashed_password = hash_password(register_data.password)
+            hashed_password =  hash_password(register_data.password)
             user = User(
                 username=register_data.username,
                 password=hashed_password

@@ -1,8 +1,9 @@
+import traceback
 from fastapi import HTTPException
 from models.database_models import Diary, User
 from models.schemas.diary import DiaryRequest, DiaryResponse
 from typing import List
-from datetime import datetime
+from datetime import date
 
 class DiaryService:
     @staticmethod
@@ -12,18 +13,26 @@ class DiaryService:
             if not user:
                 raise HTTPException(status_code=404, detail="Utente non trovato")
             
+            existing = await Diary.find_one(
+                Diary.user.id == user.id,
+                Diary.daily_date == date.today()
+            )
+            if existing:
+                raise HTTPException(status_code=409, detail="Hai già scritto un diario oggi")
+
             diary = Diary(
                 text=diary_data.text,
-                daily_date=datetime.now(),
+                daily_date=date.today(),
                 user=user
-            )       
+            )
             await diary.insert()
             return diary
         except HTTPException:
             raise
         except Exception:
+            traceback.print_exc()
             raise HTTPException(500, "Errore interno del server")
-    
+
     @staticmethod
     async def get_user_diaries(username: str) -> List[Diary]:
         try:

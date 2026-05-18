@@ -31,7 +31,7 @@ export class Homepage {
         this.diaries.set(data);
         this.loading.set(false);
       },
-      error: (err: HttpErrorResponse) => {
+      error: () => {
         this.loading.set(false);
         this.error.set('Impossibile caricare i diary');
       },
@@ -45,6 +45,7 @@ export class Homepage {
   closeForm(): void {
     this.showForm.set(false);
     this.form = { text: '' };
+    this.error.set(null);
   }
 
   onSubmit(): void {
@@ -57,7 +58,7 @@ export class Homepage {
       },
       error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        this.error.set('Impossibile creare il diary');
+        this.error.set(err.error?.detail ?? 'Impossibile creare il diary');
       },
     });
   }

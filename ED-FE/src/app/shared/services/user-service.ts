@@ -14,7 +14,6 @@ export class UserService {
   private _user = signal<IUserResponse | null>(null);
   private http = inject(HttpClient);
   private authUrl = `${environment.syD}/sync-diary/auth`;
-  private apiUrl = `${environment.syD}/sync-diary`;
 
   isLogged = computed(() => this._isLogged());
 
@@ -45,6 +44,6 @@ export class UserService {
   }
 
   getMe() {
-    return this.http.get<IUserResponse>(`${this.apiUrl}/me`);
+    return this.http.get<IUserResponse>(`${this.authUrl}/me`);
   }
 }

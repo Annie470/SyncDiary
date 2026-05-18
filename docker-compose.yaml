@@ -6,13 +6,14 @@ services:
     ports:
       - "8002:8000"
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     env_file:
       - ./ED-BE/.env
     volumes:
       - ./ED-BE:/app
     working_dir: /app
-    command: uvicorn main:app --port 8000 --reload --log-level debug
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --log-level debug
 
   nginx:
     image: nginx:alpine
@@ -43,6 +44,12 @@ services:
       - "27018:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   mongo_data:
