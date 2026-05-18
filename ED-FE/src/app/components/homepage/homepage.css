@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  background-color: black;
 }
 
 .diary-grid {
@@ -13,7 +14,21 @@
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.2rem;
   margin-top: 1.5rem;
+  text-align: center;
+ 
 }
+
+.diary-head  {
+   border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+   background-color: white;
+}
+
 
 .diary-card {
   border: 1px solid #ddd;
@@ -23,18 +38,20 @@
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
+   background-color: white;
 }
 
 .diary-date {
   font-size: 0.8rem;
   color: #888;
-  margin: 0;
+  margin: 0
 }
 
 .diary-text {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.5;
+  text-align: start;
 }
 
 .empty {

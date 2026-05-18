@@ -1,16 +1,18 @@
 <div class="page">
-  <h1>Diari del giorno</h1>
-  <small class="text-muted">{{ currentDate }}</small>
 
-  @if (loading()) {
-    <div class="d-flex justify-content-center mt-4">
+  <div class="diary-grid col-12">
+    <div class="diary-head">
+     <h1 class="mb-0">Diari del giorno</h1>
+  <small class="diary-date">{{ currentDate }}</small>
+</div>
+ @if (loading()) {
+    <div class="d-flex justify-content-center mt-5">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Caricamento...</span>
       </div>
     </div>
   }
 
-  <div class="diary-grid col-10">
     @for (diary of diaries(); track diary.id) {
       <div class="diary-card">
         <p class="diary-text">{{ diary.text }}</p>
