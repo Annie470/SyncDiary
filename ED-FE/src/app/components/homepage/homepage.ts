@@ -1,13 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { DiaryService } from '../../shared/services/diary-service';
 import { IDiaryRequest, IDiaryResponse } from '../../shared/models/diary';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-homepage',
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
@@ -17,7 +16,7 @@ export class Homepage {
   error = signal<string | null>(null);
   diaries = signal<IDiaryResponse[]>([]);
   showForm = signal(false);
-
+  currentDate = new Date().toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   form: IDiaryRequest = { text: '' };
 
   constructor() {

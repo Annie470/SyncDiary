@@ -1,7 +1,5 @@
 <div class="auth-wrapper">
-  <div class="top-bar">
-    <a routerLink="/register">Non hai un account? Registrati</a>
-  </div>
+  
 
   <form (ngSubmit)="onSubmit()" class="auth-form">
     <h2>Accedi</h2>
@@ -24,6 +22,9 @@
      <button type="submit" [disabled]="loading()" class="text-white">
         {{ loading() ? 'Caricamento...' : 'Accedi' }}
 </button>
+<div class="link-bar d-flex">
+    <a routerLink="/register">Non hai un account? Registrati</a>
+  </div>
  @if (error()) {
 <div class="alert alert-danger">{{ error() }}</div>
       }
