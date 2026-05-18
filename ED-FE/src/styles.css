@@ -72,3 +72,31 @@ button[type='submit']:disabled {
   background-color: #aaa;
   cursor: not-allowed;
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 2.5rem;
+}
+
+.toggle-pwd {
+  position: absolute;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #777;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-pwd:hover {
+  color: #333;
+}

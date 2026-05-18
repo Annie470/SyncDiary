@@ -13,12 +13,22 @@
 
     <div class="field">
       <label for="password">Password</label>
-      <input id="password" name="password" type="password" [(ngModel)]="form.password" placeholder="La tua password" />
+      <div class="password-wrapper">
+        <input id="password" name="password" [type]="showPassword() ? 'text' : 'password'" [(ngModel)]="form.password" placeholder="La tua password" />
+        <button type="button" class="toggle-pwd" (click)="showPassword.set(!showPassword())" tabindex="-1">
+          <i [class]="showPassword() ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+        </button>
+      </div>
     </div>
 
     <div class="field">
       <label for="confirmedPwd">Conferma password</label>
-      <input id="confirmedPwd" name="confirmedPwd" type="password" [(ngModel)]="confirmedPwd" placeholder="Ripeti la password" />
+      <div class="password-wrapper">
+        <input id="confirmedPwd" name="confirmedPwd" [type]="showConfirmPassword() ? 'text' : 'password'" [(ngModel)]="confirmedPwd" placeholder="Ripeti la password" />
+        <button type="button" class="toggle-pwd" (click)="showConfirmPassword.set(!showConfirmPassword())" tabindex="-1">
+          <i [class]="showConfirmPassword() ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+        </button>
+      </div>
     </div>
 
     <button type="submit" [disabled]="loading()">

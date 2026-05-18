@@ -17,6 +17,7 @@ export class Login {
   private router = inject(Router);
   loading = signal(false);
   error = signal<string | null>(null);
+  showPassword = signal(false);
   credentials: IUserLogin = { username: '', password: '' };
 
   onSubmit(): void {

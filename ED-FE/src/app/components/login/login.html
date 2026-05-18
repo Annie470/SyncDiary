@@ -13,7 +13,12 @@
 
     <div class="field">
       <label for="password">Password</label>
-      <input id="password" name="password" type="password" [(ngModel)]="credentials.password" placeholder="La tua password" />
+      <div class="password-wrapper">
+        <input id="password" name="password" [type]="showPassword() ? 'text' : 'password'" [(ngModel)]="credentials.password" placeholder="La tua password" />
+        <button type="button" class="toggle-pwd" (click)="showPassword.set(!showPassword())" tabindex="-1">
+          <i [class]="showPassword() ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+        </button>
+      </div>
     </div>
 
      <button type="submit" [disabled]="loading()" class="text-white">
