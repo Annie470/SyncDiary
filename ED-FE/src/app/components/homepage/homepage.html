@@ -1,6 +1,6 @@
 <div class="page">
 
-  <div class="diary-grid col-12">
+  <div class="diary-grid col-12 overflow-y-auto">
     <div class="diary-head">
      <h1 class="mb-0">Diari del giorno</h1>
   <small class="diary-date">{{ currentDate }}</small>
@@ -29,7 +29,7 @@
       <div class="modal" (click)="$event.stopPropagation()">
         <h2>Nuovo diario</h2>
 
-        <form (ngSubmit)="onSubmit()" class="w-100 h-100 d-flex flex-column justify-content-between mt-5">
+        <form (ngSubmit)="onSubmit()" class="w-100 h-100 d-flex flex-column justify-content-between my-3">
           
           <div class="field">
             <textarea id="text" name="text" [(ngModel)]="form.text" rows="25" placeholder="Scrivi il tuo diario..."></textarea>
@@ -48,4 +48,5 @@
       </div>
     </div>
   }
+
 </div>
