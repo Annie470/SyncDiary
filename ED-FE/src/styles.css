@@ -264,51 +264,6 @@ body {
   text-align: center;
 }
 
-/* ── NEW DIARY FORM ── */
-.form-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  gap: 1.2rem;
-}
-
-.form-wrapper h2 {
-  width: 100%;
-  max-width: 700px;
-  background-color: rgb(226, 224, 224);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin: 0;
-  text-align: center;
-}
-
-.diary-form {
-  width: 100%;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.diary-form textarea {
-  width: 100%;
-  padding: 1rem 1.2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: rgb(226, 224, 224);
-  font-size: 1rem;
-  font-family: inherit;
-  resize: vertical;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.diary-form textarea:focus {
-  border-color: #555;
-}
 
 .form-actions {
   display: flex;
@@ -324,9 +279,6 @@ body {
   margin-left: auto;
 }
 
-.top-bar a:hover {
-  text-decoration: underline;
-}
 
 .auth-form {
   display: flex;
