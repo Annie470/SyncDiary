@@ -16,7 +16,7 @@ async def get_my_diaries(username: str = Depends(get_current_user)):
 
 @router.get("/daily-diaries", response_model=List[DiaryResponse])
 async def get_all_diaries(username: str = Depends(get_current_user)):
-    return await DiaryService.get_all_diaries(username)
+    return await DiaryService.get_all_diaries()
 
 @router.get("/{diary_id}", response_model=DiaryResponse)
 async def get_diary(diary_id: str,username: str = Depends(get_current_user)):

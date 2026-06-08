@@ -51,7 +51,7 @@ class DiaryService:
             raise HTTPException(500, "Errore interno del server")
 
     @staticmethod
-    async def get_all_diaries(username: str) -> List[DiaryResponse]:
+    async def get_all_diaries() -> List[DiaryResponse]:
         try:
             diaries = await Diary.find().to_list()
             return [
