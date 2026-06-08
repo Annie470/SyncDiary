@@ -1,0 +1,38 @@
+<div class="page">
+
+  <nav class="top-nav">
+    <span class="app-title">SyncDiary</span>
+    <div class="nav-links">    
+      <a class="nav-link nav-new" (click)="cancel()">Annulla</a>
+    </div>
+  </nav>
+<h4 class="app-title text-center mt-2">Nuovo diario</h4>
+  <div class="main-layout">
+ <main class="detail-panel">
+    <form (ngSubmit)="onSubmit()" class="detail-card">
+      <div class="field">
+        <textarea
+          id="text"
+          name="text"
+          [(ngModel)]="form.text"
+          rows="18"
+          placeholder="Scrivi il tuo diario..."
+          class="detail-textarea"
+          >
+        </textarea>
+      </div>
+
+      @if (error()) {
+        <div class="alert alert-danger mt-2">{{ error() }}</div>
+      }
+
+      <div class="form-actions mt-2">
+        <button type="submit" [disabled]="loading()">
+          {{ loading() ? 'Salvataggio...' : 'Salva' }}
+        </button>
+      </div>
+    </form>
+  </main>
+  </div>
+
+</div>

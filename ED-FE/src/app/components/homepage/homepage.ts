@@ -1,26 +1,30 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { DiaryService } from '../../shared/services/diary-service';
-import { IDiaryRequest, IDiaryResponse } from '../../shared/models/diary';
-import { HttpErrorResponse } from '@angular/common/http';
+import { IDiaryResponse } from '../../shared/models/diary';
+import { UserService } from '../../shared/services/user-service';
+import { IUserResponse } from '../../shared/models/user';
 
 @Component({
   selector: 'app-homepage',
-  imports: [FormsModule],
+  imports: [RouterLink],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
 export class Homepage {
   private diaryService = inject(DiaryService);
+  private userService = inject(UserService);
   loading = signal(false);
   error = signal<string | null>(null);
   diaries = signal<IDiaryResponse[]>([]);
-  showForm = signal(false);
-  currentDate = new Date().toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  form: IDiaryRequest = { text: '' };
+  selectedDiary = signal<IDiaryResponse | null>(null);
+  username = signal<string>('');
 
   constructor() {
     this.loadDiaries();
+    this.userService.getMe().subscribe({
+      next: (user: IUserResponse) => this.username.set(user.username),
+    });
   }
 
   loadDiaries(): void {
@@ -28,37 +32,27 @@ export class Homepage {
     this.diaryService.getAllDiaries().subscribe({
       next: (data: IDiaryResponse[]) => {
         this.diaries.set(data);
+        if (data.length > 0) this.selectedDiary.set(data[0]);
         this.loading.set(false);
       },
       error: () => {
         this.loading.set(false);
-        this.error.set('Impossibile caricare i diary');
+        this.error.set('Impossibile caricare i diari');
       },
     });
   }
 
-  openForm(): void {
-    this.showForm.set(true);
+  selectDiary(diary: IDiaryResponse): void {
+    this.selectedDiary.set(diary);
   }
 
-  closeForm(): void {
-    this.showForm.set(false);
-    this.form = { text: '' };
-    this.error.set(null);
+  preview(text: string): string {
+    return text.length > 60 ? text.slice(0, 60) + '…' : text;
   }
 
-  onSubmit(): void {
-    this.loading.set(true);
-    this.diaryService.createDiary(this.form).subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.loadDiaries();
-        this.closeForm();
-      },
-      error: (err: HttpErrorResponse) => {
-        this.loading.set(false);
-        this.error.set(err.error?.detail ?? 'Impossibile creare il diary');
-      },
+  formatDate(dateStr: string): string {
+    return new Date(dateStr).toLocaleDateString('it-IT', {
+      day: 'numeric', month: 'long', year: 'numeric'
     });
   }
 }
