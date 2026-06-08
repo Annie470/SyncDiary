@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Playball&family=Quicksand:wght@300..700&display=swap');
+
+body {
+   font-family: "Quicksand", sans-serif;
+}
+
 .auth-wrapper {
   display: flex;
   flex-direction: column;
@@ -26,7 +32,7 @@
   gap: 1.2rem;
   width: 100%;
   max-width: 360px;
-  background-color: white;
+  background-color:  rgb(226, 224, 224);
   padding: 1rem;
   border-radius: 10px;
 }

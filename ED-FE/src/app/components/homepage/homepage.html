@@ -32,7 +32,7 @@
         <form (ngSubmit)="onSubmit()" class="w-100 h-100 d-flex flex-column justify-content-between my-3">
           
           <div class="field">
-            <textarea id="text" name="text" [(ngModel)]="form.text" rows="25" placeholder="Scrivi il tuo diario..."></textarea>
+            <textarea id="text" name="text" [(ngModel)]="form.text" rows="15" placeholder="Scrivi il tuo diario..."></textarea>
           </div>
 
           @if (error()) {

@@ -137,7 +137,7 @@
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-   background-color: white;
+   background-color: rgb(226, 224, 224);
 }
 
 
@@ -149,7 +149,7 @@
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-   background-color: white;
+   background-color:  rgb(226, 224, 224);
 }
 
 .diary-date {
@@ -209,7 +209,7 @@
 }
 
 .modal h2 {
-  background-color: white;
+  background-color: rgb(226, 224, 224);
    border-radius: 10px;
   padding: 1rem;
   margin: 0;
@@ -224,7 +224,6 @@
   resize: vertical;
   outline: none;
   font-family: inherit;
-  margin-bottom: 25px;
 }
 
 .modal textarea:focus {
