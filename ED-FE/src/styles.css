@@ -12,6 +12,76 @@ body {
   min-height: 100vh;
   padding: 2rem;
   background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle closest-side, rgba(255, 40,  0,   0.95), transparent),
+    radial-gradient(circle closest-side, rgba(221, 0, 255, 0.95), transparent),
+    radial-gradient(circle closest-side, rgba(255, 130, 0,   0.90), transparent),
+    radial-gradient(circle closest-side, rgba(200, 0,   0,   0.85), transparent),
+    radial-gradient(circle closest-side, rgba(255, 200, 0,   0.90), transparent),
+    radial-gradient(circle closest-side, rgba(255, 70,  0,   0.88), transparent),
+    radial-gradient(circle closest-side, rgba(255, 160, 0,   0.85), transparent),
+    radial-gradient(circle closest-side, rgba(255, 20,  0,   0.92), transparent),
+    radial-gradient(circle closest-side, rgba(255, 100, 0,   0.87), transparent),
+    radial-gradient(circle closest-side, rgba(180, 0,   0,   0.80), transparent),
+    radial-gradient(circle closest-side, rgba(255, 230, 0,   0.88), transparent),
+    radial-gradient(circle closest-side, rgba(99, 6, 88, 0.85), transparent),
+    radial-gradient(circle closest-side, rgba(255, 55,  0,   0.85), transparent);
+  background-size:
+    230px 230px, 200px 200px, 160px 160px, 290px 290px, 140px 140px,
+    200px 130px, 180px 180px, 100px 110px, 250px 250px, 130px 130px,
+    170px 190px, 170px 130px, 95px 95px;
+  background-repeat: no-repeat;
+  filter: blur(28px);
+  animation: lava-rise 16s ease-in-out infinite alternate;
+}
+
+.auth-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle closest-side, rgba(255, 60,  0,   0.90), transparent),
+    radial-gradient(circle closest-side, rgba(221, 0, 255, 0.95), transparent),
+    radial-gradient(circle closest-side, rgba(255, 220, 0,   0.85), transparent),
+    radial-gradient(circle closest-side, rgba(220, 20,  0,   0.88), transparent),
+    radial-gradient(circle closest-side, rgba(255, 180, 0,   0.82), transparent),
+    radial-gradient(circle closest-side, rgba(255, 30,  0,   0.90), transparent),
+    radial-gradient(circle closest-side, rgba(200, 80,  0,   0.85), transparent),
+    radial-gradient(circle closest-side, rgba(99, 6, 88, 0.85), transparent),
+    radial-gradient(circle closest-side, rgba(255, 210, 0,   0.80), transparent);
+  background-size:
+    230px 260px, 350px 320px, 100px 150px, 190px 180px, 120px 120px,
+    210px 210px, 100px 100px, 90px 100px, 145px 125px;
+  background-repeat: no-repeat;
+  filter: blur(32px);
+  animation: lava-sink 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes lava-rise {
+  0%   { background-position: 7%  105%, 21% 98%,  35% 102%, 50% 95%,  64% 100%, 78% 92%,  92% 98%,  14% 100%, 42% 105%, 71% 96%,  85% 102%, 28% 94%,  57% 100%; }
+  20%  { background-position: 7%  70%,  21% 85%,  35% 55%,  50% 78%,  64% 65%,  78% 88%,  92% 72%,  14% 60%,  42% 80%,  71% 50%,  85% 75%,  28% 68%,  57% 82%;  }
+  40%  { background-position: 7%  30%,  21% 45%,  35% 20%,  50% 40%,  64% 28%,  78% 50%,  92% 35%,  14% 15%,  42% 38%,  71% 22%,  85% 42%,  28% 30%,  57% 18%;  }
+  60%  { background-position: 7%  8%,   21% 20%,  35% 50%,  50% 12%,  64% 45%,  78% 18%,  92% 8%,   14% 38%,  42% 10%,  71% 55%,  85% 15%,  28% 5%,   57% 42%;  }
+  80%  { background-position: 7%  48%,  21% 62%,  35% 35%,  50% 58%,  64% 80%,  78% 40%,  92% 65%,  14% 72%,  42% 55%,  71% 32%,  85% 68%,  28% 50%,  57% 75%;  }
+  100% { background-position: 7%  88%,  21% 75%,  35% 92%,  50% 82%,  64% 70%,  78% 95%,  92% 80%,  14% 88%,  42% 78%,  71% 92%,  85% 85%,  28% 90%,  57% 72%;  }
+}
+
+@keyframes lava-sink {
+  0%   { background-position: 10% 8%,   26% 5%,   42% 10%,  58% 4%,   74% 8%,   90% 6%,   18% 10%,  50% 4%,   82% 7%;   }
+  25%  { background-position: 10% 35%,  26% 55%,  42% 28%,  58% 48%,  74% 32%,  90% 60%,  18% 40%,  50% 25%,  82% 50%;  }
+  50%  { background-position: 10% 70%,  26% 80%,  42% 62%,  58% 88%,  74% 75%,  90% 82%,  18% 68%,  50% 78%,  82% 72%;  }
+  75%  { background-position: 10% 45%,  26% 30%,  42% 85%,  58% 55%,  74% 50%,  90% 38%,  18% 55%,  50% 45%,  82% 32%;  }
+  100% { background-position: 10% 12%,  26% 20%,  42% 8%,   58% 18%,  74% 14%,  90% 10%,  18% 15%,  50% 10%,  82% 5%;   }
 }
 
 
@@ -32,9 +102,11 @@ body {
   gap: 1.2rem;
   width: 100%;
   max-width: 360px;
-  background-color:  rgb(226, 224, 224);
+  background-color: rgb(226, 224, 224);
   padding: 1rem;
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-form h2 {
