@@ -2,8 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DiaryService } from '../../shared/services/diary-service';
 import { IDiaryResponse } from '../../shared/models/diary';
-import { UserService } from '../../shared/services/user-service';
-import { IUserResponse } from '../../shared/models/user';
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +11,6 @@ import { IUserResponse } from '../../shared/models/user';
 })
 export class Homepage {
   private diaryService = inject(DiaryService);
-  private userService = inject(UserService);
   loading = signal(false);
   error = signal<string | null>(null);
   diaries = signal<IDiaryResponse[]>([]);
@@ -22,9 +19,6 @@ export class Homepage {
 
   constructor() {
     this.loadDiaries();
-    this.userService.getMe().subscribe({
-      next: (user: IUserResponse) => this.username.set(user.username),
-    });
   }
 
   loadDiaries(): void {
