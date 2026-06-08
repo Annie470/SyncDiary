@@ -12,9 +12,9 @@ class DiaryService:
             user = await User.find_one(User.username == username)
             if not user:
                 raise HTTPException(status_code=404, detail="Utente non trovato")
-            
+
             existing = await Diary.find_one(
-                Diary.user.id == user.id,
+                Diary.user_id == str(user.id),
                 Diary.daily_date == date.today()
             )
             if existing:
@@ -23,7 +23,7 @@ class DiaryService:
             diary = Diary(
                 text=diary_data.text,
                 daily_date=date.today(),
-                user=user
+                user_id=str(user.id)
             )
             await diary.insert()
             return diary
@@ -34,64 +34,72 @@ class DiaryService:
             raise HTTPException(500, "Errore interno del server")
 
     @staticmethod
-    async def get_user_diaries(username: str) -> List[Diary]:
+    async def get_user_diaries(username: str) -> List[DiaryResponse]:
         try:
             user = await User.find_one(User.username == username)
             if not user:
-                raise HTTPException(status_code=404, detail="Utente non trovato")      
-            diaries = await Diary.find(Diary.user.id == user.id).to_list()
-            return diaries
+                raise HTTPException(status_code=404, detail="Utente non trovato")
+            diaries = await Diary.find(Diary.user_id == str(user.id)).to_list()
+            return [
+                DiaryResponse(id=str(d.id), text=d.text, daily_date=d.daily_date, user_id=d.user_id)
+                for d in diaries
+            ]
         except HTTPException:
             raise
         except Exception:
+            traceback.print_exc()
             raise HTTPException(500, "Errore interno del server")
-        
+
     @staticmethod
-    async def get_all_diaries(username: str) -> List[Diary]:
+    async def get_all_diaries(username: str) -> List[DiaryResponse]:
         try:
             diaries = await Diary.find().to_list()
-            return diaries
+            return [
+                DiaryResponse(id=str(d.id), text=d.text, daily_date=d.daily_date, user_id=d.user_id)
+                for d in diaries
+            ]
         except HTTPException:
             raise
         except Exception:
+            traceback.print_exc()
             raise HTTPException(500, "Errore interno del server")
-    
+
     @staticmethod
-    async def get_diary_by_id(diary_id: str): 
-        try:     
-            diary = await Diary.find_one(Diary.id == diary_id) 
+    async def get_diary_by_id(diary_id: str):
+        try:
+            diary = await Diary.find_one(Diary.id == diary_id)
             if not diary:
                 raise HTTPException(status_code=404, detail="Diary non trovato")
-                
-            await diary.fetch_link(Diary.user)        
             return DiaryResponse(
                 id=str(diary.id),
                 text=diary.text,
                 daily_date=diary.daily_date,
-                user_id=str(diary.user.id)
+                user_id=diary.user_id
             )
         except HTTPException:
             raise
         except Exception:
+            traceback.print_exc()
             raise HTTPException(500, "Errore interno del server")
-    
+
     @staticmethod
     async def delete_diary(diary_id: str, username: str):
         try:
             user = await User.find_one(User.username == username)
             if not user:
                 raise HTTPException(status_code=404, detail="Utente non trovato")
-            
-            diary = await Diary.find_one(Diary.id == diary_id)      
+
+            diary = await Diary.find_one(Diary.id == diary_id)
             if not diary:
                 raise HTTPException(status_code=404, detail="Diary non trovato")
-            
-            if str(diary.user.id) != str(user.id):
-                raise HTTPException(403,"Non autorizzato ad eliminare questo Diary")
-            
+
+            if diary.user_id != str(user.id):
+                raise HTTPException(403, "Non autorizzato ad eliminare questo Diary")
+
             await diary.delete()
             return {"message": "Diary eliminato con successo"}
         except HTTPException:
             raise
         except Exception:
+            traceback.print_exc()
             raise HTTPException(500, "Errore interno del server")
