@@ -36,10 +36,6 @@ export class Homepage {
     });
   }
 
-  selectDiary(diary: IDiaryResponse): void {
-    this.selectedDiary.set(diary);
-  }
-
   preview(text: string): string {
     return text.length > 60 ? text.slice(0, 60) + '…' : text;
   }

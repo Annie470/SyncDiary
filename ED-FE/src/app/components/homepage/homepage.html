@@ -10,11 +10,12 @@
   <div class="main-layout">
    
     <main class="detail-panel">
-      @if (selectedDiary()) {
-        <div class="detail-card">
-          <p class="detail-date">{{ formatDate(selectedDiary()!.daily_date) }}</p>
-          <p class="detail-text">{{ selectedDiary()!.text }}</p>
-        </div>
+      @if (diaries().length > 0) {
+        @for  (diary of diaries(); track diary.id) {
+        <div class="detail-card mb-1">
+          <p class="detail-date">{{ formatDate(diary.daily_date) }}</p>
+          <p class="detail-text">{{ diary.text }}</p>
+        </div>}
       } @else {
         <p class="empty">Non è stato scritto alcun diario oggi.</p>
       }
