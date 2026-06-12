@@ -155,7 +155,7 @@ body {
 .top-nav {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -163,12 +163,12 @@ body {
 }
 
 .app-title {
-  font-size: 1.1rem;
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+  margin: 0;
 }
 
 .nav-links {
@@ -236,10 +236,28 @@ body {
 }
 
 .detail-textarea {
-  background: rgba(15, 15, 15, 0.72);
-  backdrop-filter: blur(14px);
-   border-radius: 12px;
-  color: white;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.daily-date-header {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0.25rem 0;
+}
+
+.detail-author {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.25rem 0;
 }
 
 .detail-date {
@@ -325,10 +343,10 @@ body {
 }
 
 button[type='submit'] {
-  padding: 0.7rem;
-  background-color: #515050;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
@@ -336,11 +354,11 @@ button[type='submit'] {
 }
 
 button[type='submit']:disabled {
-  background-color: #aaa;
+  opacity: 0.4;
   cursor: not-allowed;
 }
-button[type='submit']:hover {
-  background-color: #9d9d9d;
+button[type='submit']:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .password-wrapper {

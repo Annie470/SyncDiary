@@ -1,26 +1,28 @@
 <div class="page">
 
   <nav class="top-nav">
-    <span class="app-title">SyncDiary</span>
-    <div class="nav-links">    
+    <h3 class="app-title">SyncDiary</h3>
+    <div class="nav-links">
       <a class="nav-link nav-new" routerLink="/new-diary">+ Nuovo</a>
     </div>
   </nav>
-<h4 class="app-title text-center mt-2">Tutti i diari</h4>
+
+  <h4 class="app-title text-center mt-2">Tutti i diari</h4>
+  <p class="daily-date-header text-center">{{ todayFormatted }}</p>
+
   <div class="main-layout">
-   
     <main class="detail-panel">
       @if (diaries().length > 0) {
-        @for  (diary of diaries(); track diary.id) {
-        <div class="detail-card mb-1">
-          <p class="detail-date">{{ formatDate(diary.daily_date) }}</p>
-          <p class="detail-text">{{ diary.text }}</p>
-        </div>}
+        @for (diary of diaries(); track diary.id) {
+          <div class="detail-card mb-1">
+            <p class="detail-author">{{ getAuthor(diary) }}</p>
+            <p class="detail-text">{{ diary.text }}</p>
+          </div>
+        }
       } @else {
         <p class="empty">Non è stato scritto alcun diario oggi.</p>
       }
     </main>
-
   </div>
 
 </div>

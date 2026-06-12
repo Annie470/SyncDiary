@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DiaryService } from '../../shared/services/diary-service';
-import { IDiaryResponse } from '../../shared/models/diary';
+import { UserService } from '../../shared/services/user-service';
+import type { IDiaryResponse } from '../../shared/models/diary';
 
 @Component({
   selector: 'app-homepage',
@@ -11,22 +12,34 @@ import { IDiaryResponse } from '../../shared/models/diary';
 })
 export class Homepage {
   private diaryService = inject(DiaryService);
+  private userService = inject(UserService);
   loading = signal(false);
   error = signal<string | null>(null);
   diaries = signal<IDiaryResponse[]>([]);
-  selectedDiary = signal<IDiaryResponse | null>(null);
-  username = signal<string>('');
+  currentUser = this.userService.currentUser;
+  todayFormatted = new Date().toLocaleDateString('it-IT', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  });
 
   constructor() {
+    this.ensureUser();
     this.loadDiaries();
   }
 
-  loadDiaries(): void {
+  private ensureUser(): void {
+    if (!this.currentUser()) {
+      this.userService.getMe().subscribe({
+        next: (user) => this.userService.setUser(user),
+        error: () => {},
+      });
+    }
+  }
+
+  private loadDiaries(): void {
     this.loading.set(true);
     this.diaryService.getAllDiaries().subscribe({
       next: (data: IDiaryResponse[]) => {
         this.diaries.set(data);
-        if (data.length > 0) this.selectedDiary.set(data[0]);
         this.loading.set(false);
       },
       error: () => {
@@ -36,13 +49,14 @@ export class Homepage {
     });
   }
 
-  preview(text: string): string {
-    return text.length > 60 ? text.slice(0, 60) + '…' : text;
+  getAuthor(diary: IDiaryResponse): string {
+    const user = this.currentUser();
+    return user && diary.user_id === user.id ? user.username : 'Anonimo';
   }
 
   formatDate(dateStr: string): string {
     return new Date(dateStr).toLocaleDateString('it-IT', {
-      day: 'numeric', month: 'long', year: 'numeric'
+      day: 'numeric', month: 'long', year: 'numeric',
     });
   }
 }

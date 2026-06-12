@@ -16,6 +16,7 @@ export class UserService {
   private authUrl = `${environment.syD}/sync-diary/auth`;
 
   isLogged = computed(() => this._isLogged());
+  currentUser = computed(() => this._user());
 
   private hasToken(): boolean {
     return !!localStorage.getItem(this.tokenKey);
